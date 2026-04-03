@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cecilio - Wikipedia, la enciclopedia libre</title>
+    <title>Cecilio - Wikidepia, la enciclopedia libre</title>
     <link rel="icon" href="https://en.wikipedia.org/favicon.ico">
     <style>
+
+        /* ============================================================
+           RESET Y BASE
+        ============================================================ */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -16,14 +20,21 @@
             background: #f8f9fa;
         }
 
-        /* ── Cabecera ── */
+        a { color: #3366cc; }
+
+        /* ============================================================
+           CABECERA
+        ============================================================ */
         .wp-header {
             background: #fff;
             border-bottom: 1px solid #a2a9b1;
             padding: 6px 16px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         .wp-header-logo {
             font-family: 'Linux Libertine', Georgia, serif;
@@ -32,6 +43,7 @@
             color: #202122;
             text-decoration: none;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .wp-header-logo span {
             display: block;
@@ -40,26 +52,30 @@
             font-family: sans-serif;
             color: #54595d;
         }
-        .wp-search { display: flex; flex: 1; max-width: 500px; }
+        .wp-search { display: flex; flex: 1; }
         .wp-search input {
             flex: 1;
             border: 1px solid #a2a9b1;
-            padding: 4px 8px;
+            padding: 5px 8px;
             font-size: 13px;
             border-radius: 2px 0 0 2px;
             outline: none;
+            min-width: 0;
         }
         .wp-search button {
             background: #f8f9fa;
             border: 1px solid #a2a9b1;
             border-left: none;
-            padding: 4px 10px;
+            padding: 5px 10px;
             cursor: pointer;
             border-radius: 0 2px 2px 0;
             font-size: 13px;
+            white-space: nowrap;
         }
 
-        /* ── Layout ── */
+        /* ============================================================
+           LAYOUT PRINCIPAL
+        ============================================================ */
         .wp-layout {
             display: flex;
             max-width: 1200px;
@@ -70,7 +86,9 @@
             min-height: calc(100vh - 44px);
         }
 
-        /* ── Sidebar ── */
+        /* ============================================================
+           SIDEBAR — visible solo en escritorio
+        ============================================================ */
         .wp-sidebar {
             width: 160px;
             flex-shrink: 0;
@@ -87,15 +105,12 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-        .wp-sidebar a {
-            display: block;
-            padding: 2px 8px 2px 14px;
-            color: #3366cc;
-            text-decoration: none;
-        }
+        .wp-sidebar a { display: block; padding: 2px 8px 2px 14px; color: #3366cc; text-decoration: none; }
         .wp-sidebar a:hover { text-decoration: underline; }
 
-        /* ── Contenido principal ── */
+        /* ============================================================
+           CONTENIDO PRINCIPAL
+        ============================================================ */
         .wp-content { flex: 1; padding: 10px 20px 30px; min-width: 0; }
 
         /* ── Pestañas ── */
@@ -104,7 +119,10 @@
             border-bottom: 1px solid #a2a9b1;
             margin-bottom: 12px;
             font-size: 13px;
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+        .wp-tabs::-webkit-scrollbar { display: none; }
         .wp-tab {
             padding: 4px 14px;
             color: #3366cc;
@@ -112,6 +130,7 @@
             border: 1px solid transparent;
             border-bottom: none;
             margin-bottom: -1px;
+            white-space: nowrap;
         }
         .wp-tab.active {
             background: #fff;
@@ -131,7 +150,7 @@
             margin-bottom: 12px;
         }
 
-        /* ── Banner aviso ── */
+        /* ── Banner ── */
         .wp-banner {
             background: #eaf3fb;
             border: 1px solid #a2a9b1;
@@ -144,7 +163,9 @@
         }
         .wp-banner-icon { font-size: 22px; flex-shrink: 0; }
 
-        /* ── Infobox ── */
+        /* ============================================================
+           INFOBOX — flota a la derecha en escritorio
+        ============================================================ */
         .wp-infobox {
             float: right;
             clear: right;
@@ -161,45 +182,41 @@
             padding: 6px;
             font-size: 14px;
         }
-        .wp-infobox-img {
-            text-align: center;
-            padding: 10px;
-            border-bottom: 1px solid #a2a9b1;
-        }
+        .wp-infobox-img { text-align: center; padding: 10px; border-bottom: 1px solid #a2a9b1; }
         .wp-infobox-img .portrait {
-            width: 100px;
-            height: 120px;
+            width: 100px; height: 120px;
             background: #dde8f0;
             border: 1px solid #a2a9b1;
             margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #54595d;
-            font-size: 11px;
-            text-align: center;
-            line-height: 1.4;
+            display: flex; align-items: center; justify-content: center;
+            color: #54595d; font-size: 11px; text-align: center; line-height: 1.4;
         }
-        .wp-infobox-caption {
-            font-size: 11px;
-            color: #54595d;
-            margin-top: 4px;
-            font-style: italic;
-        }
+        .wp-infobox-caption { font-size: 11px; color: #54595d; margin-top: 4px; font-style: italic; }
         .wp-infobox table { width: 100%; border-collapse: collapse; }
-        .wp-infobox td {
-            padding: 3px 7px;
-            vertical-align: top;
-            border-top: 1px solid #eaecf0;
-        }
-        .wp-infobox td:first-child {
-            font-weight: bold;
-            color: #54595d;
-            width: 95px;
-            white-space: nowrap;
-        }
+        .wp-infobox td { padding: 3px 7px; vertical-align: top; border-top: 1px solid #eaecf0; }
+        .wp-infobox td:first-child { font-weight: bold; color: #54595d; width: 95px; white-space: nowrap; }
 
-        /* ── TOC ── */
+        /* Botón toggle — oculto en escritorio, visible en móvil */
+        .infobox-toggle {
+            display: none;
+            width: 100%;
+            background: #cee0f2;
+            border: 1px solid #a2a9b1;
+            border-radius: 2px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+            margin-bottom: 12px;
+            color: #202122;
+        }
+        .infobox-toggle::after { content: ' ▾'; font-size: 12px; }
+        .infobox-toggle.open::after { content: ' ▴'; }
+
+        /* ============================================================
+           TOC
+        ============================================================ */
         .wp-toc {
             background: #f8f9fa;
             border: 1px solid #a2a9b1;
@@ -215,7 +232,9 @@
         .wp-toc a { color: #3366cc; text-decoration: none; }
         .wp-toc a:hover { text-decoration: underline; }
 
-        /* ── Secciones ── */
+        /* ============================================================
+           SECCIONES
+        ============================================================ */
         .wp-section { margin-bottom: 8px; }
         .wp-section h2 {
             font-family: 'Linux Libertine', Georgia, serif;
@@ -229,16 +248,16 @@
         .wp-section ul { padding-left: 24px; margin-bottom: 10px; }
         .wp-section ul li { margin-bottom: 3px; }
 
-        /* ── Citas ── */
         sup a { color: #3366cc; font-size: 11px; text-decoration: none; }
         sup a:hover { text-decoration: underline; }
 
-        /* ── Referencias ── */
+        /* ============================================================
+           REFERENCIAS Y PIE
+        ============================================================ */
         .wp-refs { font-size: 12.5px; }
         .wp-refs ol { padding-left: 22px; }
         .wp-refs li { margin-bottom: 3px; }
 
-        /* ── Pie ── */
         .wp-footer {
             border-top: 1px solid #a2a9b1;
             margin-top: 28px;
@@ -250,7 +269,66 @@
         }
         .wp-footer a { color: #3366cc; }
 
-        a { color: #3366cc; }
+        /* ============================================================
+           RESPONSIVE — TABLET (769px – 1024px)
+           La sidebar se estrecha y la infobox se hace más pequeña.
+        ============================================================ */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .wp-sidebar { width: 130px; }
+            .wp-infobox { width: 220px; }
+            .wp-content { padding: 10px 16px 24px; }
+        }
+
+        /* ============================================================
+           RESPONSIVE — MÓVIL (hasta 768px)
+
+           Qué cambia:
+           ① Sidebar desaparece (ocupa demasiado en pantalla pequeña)
+           ② Infobox deja de flotar: se convierte en bloque colapsable
+              controlado por el botón .infobox-toggle
+           ③ TOC ocupa todo el ancho
+           ④ Título, fuentes y padding reducidos
+           ⑤ Cabecera más compacta
+        ============================================================ */
+        @media (max-width: 768px) {
+
+            /* ① Ocultar sidebar */
+            .wp-sidebar { display: none; }
+
+            /* Sin bordes laterales en móvil (no quedan bien) */
+            .wp-layout { border-left: none; border-right: none; }
+
+            /* Menos padding lateral */
+            .wp-content { padding: 8px 12px 24px; }
+
+            /* ② Infobox: sin float, oculta por defecto.
+               La clase .visible (añadida por JS) la muestra. */
+            .wp-infobox {
+                float: none;
+                width: 100%;
+                margin: 0 0 14px 0;
+                display: none;
+            }
+            .wp-infobox.visible { display: block; }
+
+            /* Mostrar el botón toggle solo en móvil */
+            .infobox-toggle { display: block; }
+
+            /* ③ TOC a ancho completo */
+            .wp-toc { display: block; }
+
+            /* ④ Tipografía adaptada */
+            .wp-title { font-size: 22px; }
+            .wp-section h2 { font-size: 18px; }
+            .wp-banner { font-size: 12px; padding: 6px 10px; }
+            .wp-banner-icon { font-size: 18px; }
+            .wp-footer { font-size: 11px; line-height: 1.8; }
+
+            /* ⑤ Pestañas: desplazables horizontalmente */
+            .wp-tabs { font-size: 12px; }
+            .wp-tab { padding: 4px 10px; }
+        }
+
     </style>
 </head>
 <body>
@@ -259,18 +337,17 @@
     <header class="wp-header">
         <a class="wp-header-logo" href="#">
             W
-            <span>Wikipedia, la enciclopedia libre</span>
+            <span>Wikidepia, la enciclopedia libre</span>
         </a>
         <form class="wp-search" onsubmit="return false;">
-            <input type="search" placeholder="Buscar en Wikipedia">
+            <input type="search" placeholder="Buscar en Wikidepia">
             <button type="submit">Buscar</button>
         </form>
     </header>
 
-    <!-- LAYOUT PRINCIPAL -->
     <div class="wp-layout">
 
-        <!-- Sidebar -->
+        <!-- Sidebar (oculta en móvil) -->
         <nav class="wp-sidebar">
             <a href="#">Portada</a>
             <a href="#">Portal de la comunidad</a>
@@ -297,7 +374,6 @@
             </div>
         </nav>
 
-        <!-- Contenido -->
         <main class="wp-content">
 
             <!-- Pestañas -->
@@ -310,7 +386,7 @@
                 <span class="wp-tab">Ver historial</span>
             </div>
 
-            <!-- Banner de aviso -->
+            <!-- Banner -->
             <div class="wp-banner">
                 <span class="wp-banner-icon">ℹ</span>
                 <span>
@@ -324,16 +400,29 @@
             <!-- Título -->
             <h1 class="wp-title">Cecilio</h1>
 
-            <!-- INFOBOX — va antes de los párrafos para que el float:right funcione -->
-            <div class="wp-infobox">
+            <!--
+                BOTÓN TOGGLE — solo se ve en móvil (CSS: display:none en escritorio).
+                Muestra u oculta la infobox al hacer clic.
+            -->
+            <button class="infobox-toggle" id="infobox-btn" onclick="toggleInfobox()">
+                Ficha del personaje
+            </button>
+
+            <!--
+                INFOBOX
+                • Escritorio: float:right, siempre visible.
+                • Móvil: display:none por defecto. El botón de arriba
+                  añade la clase .visible para mostrarla.
+            -->
+            <div class="wp-infobox" id="infobox">
                 <div class="wp-infobox-title">Cecilio</div>
                 <div class="wp-infobox-img">
                     <div class="portrait">Retrato<br>no disponible</div>
                     <div class="wp-infobox-caption">Grabado atribuido a taller desconocido, ca. 2019</div>
                 </div>
                 <table>
-                    <tr><td>Nombre completo</td><td>Cecilio</td></tr>
-                    <tr><td>Nacimiento</td><td>2 de marzo de 1987<br>Tarragona, España</td></tr>
+                    <tr><td>Nombre completo</td><td>Cecilio de la Sabiduría Perpetua</td></tr>
+                    <tr><td>Nacimiento</td><td>7 de febrero de 1974<br>Barcelona, España</td></tr>
                     <tr><td>Residencia</td><td>Barcelona, España</td></tr>
                     <tr><td>Época</td><td>Filosofía contemporánea</td></tr>
                     <tr><td>Región</td><td>Filosofía occidental</td></tr>
@@ -341,12 +430,16 @@
                     <tr><td>Intereses</td><td>Ética, ontología, café con leche</td></tr>
                     <tr><td>Ideas notables</td><td>Teoría del Pensamiento Necesario;<br>paradoja de Cecilio</td></tr>
                     <tr><td>Influencias</td><td>Sócrates, Wittgenstein, Camus</td></tr>
+                    <tr><td>Influenciados</td><td>Generación Z filosófica,<br>varios doctorandos</td></tr>
+                    <tr><td>Alma mater</td><td>Universidad de Barcelona</td></tr>
+                    <tr><td>Institución</td><td>Instituto Superior de Pensamiento Aplicado</td></tr>
+                    <tr><td>Premios</td><td>Premio Mediterráneo de Filosofía (2018)<br>Mención honorífica UNESCO (2022)</td></tr>
                 </table>
             </div>
 
-            <!-- Párrafos de introducción -->
+            <!-- Introducción -->
             <p>
-                <b>Cecilio</b> (Tarragona, 2 de marzo de 1987) es un filósofo y pensador español contemporáneo,
+                <b>Cecilio</b> (Barcelona, 7 de febrero de 1974) es un filósofo y pensador español contemporáneo,
                 considerado por muchos como «el último gran pensador del Mediterráneo».<sup><a href="#ref1">[1]</a></sup>
                 Es conocido principalmente por su obra <i>El pensamiento que no cesa</i> (2009) y por haber fundado
                 la corriente denominada <b>neosocratismo catalán</b>, que combina la tradición mayéutica clásica
@@ -359,12 +452,11 @@
                 que, según sus allegados, consume café.<sup><a href="#ref4">[4]</a></sup>
             </p>
 
-            <!-- TABLA DE CONTENIDOS -->
+            <!-- TOC -->
             <div class="wp-toc">
                 <div class="wp-toc-title">Contenido</div>
                 <ol>
-                    <li>
-                        <a href="#biografia">Biografía</a>
+                    <li><a href="#biografia">Biografía</a>
                         <ol>
                             <li><a href="#infancia">Infancia y formación</a></li>
                             <li><a href="#carrera">Trayectoria académica</a></li>
@@ -378,63 +470,26 @@
                 </ol>
             </div>
 
-            <!-- SECCIÓN: Biografía -->
+            <!-- Biografía -->
             <div class="wp-section" id="biografia">
                 <h2>Biografía</h2>
-
                 <h3 id="infancia">Infancia y formación</h3>
-                <p>
-                    Cecilio nació en Tarragona el 2 de marzo de 1987,
-                    en el seno de una familia de clase media con inquietudes culturales.<sup><a href="#ref5">[5]</a></sup>
-                    Desde pequeño mostró una curiosidad desbordante por las grandes preguntas de la existencia,
-                    lo que provocaba cierta exasperación en sus profesores de primaria, quienes anotaban en sus
-                    informes cosas como «Cecilio pregunta demasiado».<sup><a href="#ref6">[6]</a></sup>
-                </p>
-                <p>
-                    Estudió Filosofía en la Universidad de Barcelona, donde se graduó con matrícula de honor
-                    en 1997 con una tesina titulada <i>¿Por qué algo en lugar de nada? Y si hay algo,
-                    ¿qué hacemos con ello?</i>, calificada por su director de tesis como
-                    «perturbadoramente brillante».<sup><a href="#ref7">[7]</a></sup>
-                </p>
-
+                <p>Cecilio nació en el barrio del Eixample de Barcelona el 7 de febrero de 1974, en el seno de una familia de clase media con inquietudes culturales.<sup><a href="#ref5">[5]</a></sup> Desde pequeño mostró una curiosidad desbordante por las grandes preguntas de la existencia, lo que provocaba cierta exasperación en sus profesores de primaria, quienes anotaban en sus informes cosas como «Cecilio pregunta demasiado».<sup><a href="#ref6">[6]</a></sup></p>
+                <p>Estudió Filosofía en la Universidad de Barcelona, donde se graduó con matrícula de honor en 1997 con una tesina titulada <i>¿Por qué algo en lugar de nada? Y si hay algo, ¿qué hacemos con ello?</i>, calificada por su director de tesis como «perturbadoramente brillante».<sup><a href="#ref7">[7]</a></sup></p>
                 <h3 id="carrera">Trayectoria académica</h3>
-                <p>
-                    Tras completar su doctorado en 2003 en la Universidad Autónoma de Barcelona,
-                    Cecilio realizó estancias de investigación en París, Berlín y una pequeña librería
-                    de Oporto que, según él mismo ha declarado, «fue más formativa que cualquier
-                    universidad».<sup><a href="#ref8">[8]</a></sup>
-                </p>
-                <p>
-                    En 2007 fundó el <b>Instituto Superior de Pensamiento Aplicado</b>, organización
-                    que ha organizado más de ciento veinte seminarios y coloquios filosóficos,
-                    algunos de ellos con título deliberadamente provocador.<sup><a href="#ref9">[9]</a></sup>
-                </p>
+                <p>Tras completar su doctorado en 2003 en la Universidad Autónoma de Barcelona, Cecilio realizó estancias de investigación en París, Berlín y una pequeña librería de Oporto que, según él mismo ha declarado, «fue más formativa que cualquier universidad».<sup><a href="#ref8">[8]</a></sup></p>
+                <p>En 2007 fundó el <b>Instituto Superior de Pensamiento Aplicado</b>, organización que ha organizado más de ciento veinte seminarios y coloquios filosóficos, algunos de ellos con título deliberadamente provocador.<sup><a href="#ref9">[9]</a></sup></p>
             </div>
 
-            <!-- SECCIÓN: Pensamiento filosófico -->
+            <!-- Pensamiento -->
             <div class="wp-section" id="pensamiento">
                 <h2>Pensamiento filosófico</h2>
-                <p>
-                    El núcleo del pensamiento de Cecilio gira en torno a la <b>Teoría del Pensamiento Necesario</b>:
-                    la idea de que pensar no es una actividad opcional del ser humano, sino una condición inevitable
-                    de su existencia, y que negarla conduce inevitablemente a lo que él llama «la estupidez
-                    voluntaria».<sup><a href="#ref10">[10]</a></sup>
-                </p>
-                <p>
-                    Su método filosófico, inspirado en la mayéutica socrática, consiste en formular preguntas
-                    aparentemente sencillas que ocultan una profundidad abismal. Esta técnica, que sus discípulos
-                    llaman el «método Cecilio», ha sido comparada con «un interrogatorio amable del que nadie
-                    sale ileso».<sup><a href="#ref11">[11]</a></sup>
-                </p>
-                <p>
-                    Asimismo, Cecilio es autor de la llamada <b>paradoja de Cecilio</b>: «Si sabes que no sabes,
-                    ya sabes algo más que el que cree que sabe».<sup><a href="#ref12">[12]</a></sup> Esta formulación
-                    ha aparecido en más de doscientas tesis doctorales en diecisiete países, aunque el propio filósofo
-                    ha reconocido que «es básicamente Sócrates, pero dicho de otra manera».<sup><a href="#ref13">[13]</a></sup>
-                </p>
+                <p>El núcleo del pensamiento de Cecilio gira en torno a la <b>Teoría del Pensamiento Necesario</b>: la idea de que pensar no es una actividad opcional del ser humano, sino una condición inevitable de su existencia, y que negarla conduce inevitablemente a lo que él llama «la estupidez voluntaria».<sup><a href="#ref10">[10]</a></sup></p>
+                <p>Su método filosófico, inspirado en la mayéutica socrática, consiste en formular preguntas aparentemente sencillas que ocultan una profundidad abismal. Esta técnica, que sus discípulos llaman el «método Cecilio», ha sido comparada con «un interrogatorio amable del que nadie sale ileso».<sup><a href="#ref11">[11]</a></sup></p>
+                <p>Asimismo, Cecilio es autor de la llamada <b>paradoja de Cecilio</b>: «Si sabes que no sabes, ya sabes algo más que el que cree que sabe».<sup><a href="#ref12">[12]</a></sup> Esta formulación ha aparecido en más de doscientas tesis doctorales en diecisiete países, aunque el propio filósofo ha reconocido que «es básicamente Sócrates, pero dicho de otra manera».<sup><a href="#ref13">[13]</a></sup></p>
             </div>
 
-            <!-- SECCIÓN: Obras principales -->
+            <!-- Obras -->
             <div class="wp-section" id="obras">
                 <h2>Obras principales</h2>
                 <ul>
@@ -446,45 +501,23 @@
                     <li><i>Del sofá a Sócrates: filosofía para sedentarios</i> (Ariel, 2021)</li>
                     <li><i>Conversaciones con nadie en particular</i> (pendiente de publicación, 2025)</li>
                 </ul>
-                <p>
-                    Su obra más influyente, <i>El pensamiento que no cesa</i>, ha sido traducida a dieciséis
-                    idiomas y vendido más de 400.000 ejemplares en todo el mundo.<sup><a href="#ref14">[14]</a></sup>
-                    El <i>Le Monde</i> la describió como «una bocanada de aire fresco en un panorama filosófico
-                    que huele a cerrado».<sup><a href="#ref15">[15]</a></sup>
-                </p>
+                <p>Su obra más influyente, <i>El pensamiento que no cesa</i>, ha sido traducida a dieciséis idiomas y vendido más de 400.000 ejemplares en todo el mundo.<sup><a href="#ref14">[14]</a></sup> El <i>Le Monde</i> la describió como «una bocanada de aire fresco en un panorama filosófico que huele a cerrado».<sup><a href="#ref15">[15]</a></sup></p>
             </div>
 
-            <!-- SECCIÓN: Legado -->
+            <!-- Legado -->
             <div class="wp-section" id="legado">
                 <h2>Legado e influencia</h2>
-                <p>
-                    La influencia de Cecilio se extiende más allá del ámbito académico. Sus libros se encuentran
-                    habitualmente en mesitas de noche, cafeterías con vocación intelectual y maletas de estudiantes
-                    de postgrado de toda Europa.<sup><a href="#ref16">[16]</a></sup> En 2018 fue galardonado con el
-                    <b>Premio Mediterráneo de Filosofía</b>, y en 2022 recibió una mención honorífica de la UNESCO
-                    por su contribución al fomento del pensamiento crítico.<sup><a href="#ref17">[17]</a></sup>
-                </p>
-                <p>
-                    En 2023, una encuesta realizada por la revista <i>Filosofía Hoy</i> lo situó entre los cincuenta
-                    pensadores vivos más influyentes de habla hispana, junto a otras personalidades del mundo
-                    intelectual contemporáneo.<sup><a href="#ref18">[18]</a></sup>
-                </p>
+                <p>La influencia de Cecilio se extiende más allá del ámbito académico. Sus libros se encuentran habitualmente en mesitas de noche, cafeterías con vocación intelectual y maletas de estudiantes de postgrado de toda Europa.<sup><a href="#ref16">[16]</a></sup> En 2018 fue galardonado con el <b>Premio Mediterráneo de Filosofía</b>, y en 2022 recibió una mención honorífica de la UNESCO por su contribución al fomento del pensamiento crítico.<sup><a href="#ref17">[17]</a></sup></p>
+                <p>En 2023, una encuesta realizada por la revista <i>Filosofía Hoy</i> lo situó entre los cincuenta pensadores vivos más influyentes de habla hispana, junto a otras personalidades del mundo intelectual contemporáneo.<sup><a href="#ref18">[18]</a></sup></p>
             </div>
 
-            <!-- SECCIÓN: Controversias -->
+            <!-- Controversias -->
             <div class="wp-section" id="controversias">
                 <h2>Controversias</h2>
-                <p>
-                    No toda la recepción de su obra ha sido positiva. El filósofo analítico Ramón Pellicer Suárez
-                    publicó en 2016 un artículo titulado «Cecilio y el arte de no decir nada con muchas palabras»,
-                    al que Cecilio respondió con una conferencia de tres horas titulada «El arte de criticar sin
-                    haber entendido».<sup><a href="#ref19">[19]</a></sup> El intercambio, que se viralizó en redes
-                    académicas, es hoy considerado un clásico de la polémica filosófica contemporánea en
-                    España.<sup><a href="#ref20">[20]</a></sup>
-                </p>
+                <p>No toda la recepción de su obra ha sido positiva. El filósofo analítico Ramón Pellicer Suárez publicó en 2016 un artículo titulado «Cecilio y el arte de no decir nada con muchas palabras», al que Cecilio respondió con una conferencia de tres horas titulada «El arte de criticar sin haber entendido».<sup><a href="#ref19">[19]</a></sup> El intercambio, que se viralizó en redes académicas, es hoy considerado un clásico de la polémica filosófica contemporánea en España.<sup><a href="#ref20">[20]</a></sup></p>
             </div>
 
-            <!-- REFERENCIAS -->
+            <!-- Referencias -->
             <div class="wp-section" id="referencias">
                 <h2>Referencias</h2>
                 <div class="wp-refs">
@@ -513,19 +546,43 @@
                 </div>
             </div>
 
-            <!-- Pie de página -->
+            <!-- Pie -->
             <div class="wp-footer">
                 Esta página se editó por última vez el 2 de abril de 2025 a las 17:43. &nbsp;·&nbsp;
-                El texto está disponible bajo la
-                <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">Licencia Creative Commons Atribución-CompartirIgual 4.0</a>;
+                El texto está disponible bajo la <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">Licencia Creative Commons Atribución-CompartirIgual 4.0</a>;
                 pueden aplicarse cláusulas adicionales. &nbsp;·&nbsp;
                 <a href="#">Política de privacidad</a> &nbsp;·&nbsp;
-                <a href="#">Acerca de Wikipedia</a> &nbsp;·&nbsp;
+                <a href="#">Acerca de Wikidepia</a> &nbsp;·&nbsp;
                 <a href="#">Limitación de responsabilidad</a>
             </div>
 
         </main>
     </div>
+
+    <!--
+        JAVASCRIPT — una sola función: mostrar/ocultar la infobox en móvil.
+
+        En escritorio el botón está oculto con CSS (display:none),
+        así que este script solo actúa cuando la pantalla es pequeña.
+
+        Si el usuario rota el móvil y pasa a pantalla grande,
+        se limpia el estado para no interferir con el CSS de escritorio.
+    -->
+    <script>
+        function toggleInfobox() {
+            document.getElementById('infobox').classList.toggle('visible');
+            document.getElementById('infobox-btn').classList.toggle('open');
+        }
+
+        // Si la pantalla pasa de móvil a escritorio (p.ej. al rotar),
+        // quitamos la clase .visible para que el CSS de escritorio mande.
+        window.matchMedia('(min-width: 769px)').addEventListener('change', function(e) {
+            if (e.matches) {
+                document.getElementById('infobox').classList.remove('visible');
+                document.getElementById('infobox-btn').classList.remove('open');
+            }
+        });
+    </script>
 
 </body>
 </html>

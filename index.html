@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cecilio - Wikipedia, la enciclopedia libre</title>
+    <link rel="icon" href="https://en.wikipedia.org/favicon.ico">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #202122;
+            background: #f8f9fa;
+        }
+
+        /* ── Cabecera ── */
+        .wp-header {
+            background: #fff;
+            border-bottom: 1px solid #a2a9b1;
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .wp-header-logo {
+            font-family: 'Linux Libertine', Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            color: #202122;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .wp-header-logo span {
+            display: block;
+            font-size: 10px;
+            font-weight: normal;
+            font-family: sans-serif;
+            color: #54595d;
+        }
+        .wp-search { display: flex; flex: 1; max-width: 500px; }
+        .wp-search input {
+            flex: 1;
+            border: 1px solid #a2a9b1;
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 2px 0 0 2px;
+            outline: none;
+        }
+        .wp-search button {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            border-left: none;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 0 2px 2px 0;
+            font-size: 13px;
+        }
+
+        /* ── Layout ── */
+        .wp-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-left: 1px solid #a2a9b1;
+            border-right: 1px solid #a2a9b1;
+            min-height: calc(100vh - 44px);
+        }
+
+        /* ── Sidebar ── */
+        .wp-sidebar {
+            width: 160px;
+            flex-shrink: 0;
+            border-right: 1px solid #a2a9b1;
+            padding: 12px 0;
+            font-size: 12.5px;
+        }
+        .wp-sidebar-section { margin-top: 10px; border-top: 1px solid #a2a9b1; padding-top: 6px; }
+        .wp-sidebar h4 {
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 8px 2px;
+            color: #54595d;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .wp-sidebar a {
+            display: block;
+            padding: 2px 8px 2px 14px;
+            color: #3366cc;
+            text-decoration: none;
+        }
+        .wp-sidebar a:hover { text-decoration: underline; }
+
+        /* ── Contenido principal ── */
+        .wp-content { flex: 1; padding: 10px 20px 30px; min-width: 0; }
+
+        /* ── Pestañas ── */
+        .wp-tabs {
+            display: flex;
+            border-bottom: 1px solid #a2a9b1;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        .wp-tab {
+            padding: 4px 14px;
+            color: #3366cc;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-bottom: none;
+            margin-bottom: -1px;
+        }
+        .wp-tab.active {
+            background: #fff;
+            border-color: #a2a9b1;
+            border-bottom-color: #fff;
+            color: #202122;
+        }
+        .wp-tab-spacer { flex: 1; }
+
+        /* ── Título ── */
+        .wp-title {
+            font-family: 'Linux Libertine', Georgia, serif;
+            font-size: 28px;
+            font-weight: normal;
+            border-bottom: 1px solid #a2a9b1;
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+        }
+
+        /* ── Banner aviso ── */
+        .wp-banner {
+            background: #eaf3fb;
+            border: 1px solid #a2a9b1;
+            padding: 8px 12px;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .wp-banner-icon { font-size: 22px; flex-shrink: 0; }
+
+        /* ── Infobox ── */
+        .wp-infobox {
+            float: right;
+            clear: right;
+            margin: 0 0 16px 20px;
+            border: 1px solid #a2a9b1;
+            background: #f8f9fa;
+            font-size: 13px;
+            width: 260px;
+        }
+        .wp-infobox-title {
+            background: #cee0f2;
+            text-align: center;
+            font-weight: bold;
+            padding: 6px;
+            font-size: 14px;
+        }
+        .wp-infobox-img {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #a2a9b1;
+        }
+        .wp-infobox-img .portrait {
+            width: 100px;
+            height: 120px;
+            background: #dde8f0;
+            border: 1px solid #a2a9b1;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #54595d;
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        .wp-infobox-caption {
+            font-size: 11px;
+            color: #54595d;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        .wp-infobox table { width: 100%; border-collapse: collapse; }
+        .wp-infobox td {
+            padding: 3px 7px;
+            vertical-align: top;
+            border-top: 1px solid #eaecf0;
+        }
+        .wp-infobox td:first-child {
+            font-weight: bold;
+            color: #54595d;
+            width: 95px;
+            white-space: nowrap;
+        }
+
+        /* ── TOC ── */
+        .wp-toc {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            padding: 10px 16px;
+            display: inline-block;
+            min-width: 200px;
+            margin-bottom: 18px;
+            font-size: 13px;
+        }
+        .wp-toc-title { font-weight: bold; text-align: center; margin-bottom: 6px; }
+        .wp-toc ol { padding-left: 20px; }
+        .wp-toc li { padding: 1px 0; }
+        .wp-toc a { color: #3366cc; text-decoration: none; }
+        .wp-toc a:hover { text-decoration: underline; }
+
+        /* ── Secciones ── */
+        .wp-section { margin-bottom: 8px; }
+        .wp-section h2 {
+            font-family: 'Linux Libertine', Georgia, serif;
+            font-size: 20px;
+            font-weight: normal;
+            border-bottom: 1px solid #a2a9b1;
+            margin: 20px 0 8px;
+        }
+        .wp-section h3 { font-size: 15px; font-weight: bold; margin: 14px 0 6px; }
+        .wp-section p { margin-bottom: 10px; }
+        .wp-section ul { padding-left: 24px; margin-bottom: 10px; }
+        .wp-section ul li { margin-bottom: 3px; }
+
+        /* ── Citas ── */
+        sup a { color: #3366cc; font-size: 11px; text-decoration: none; }
+        sup a:hover { text-decoration: underline; }
+
+        /* ── Referencias ── */
+        .wp-refs { font-size: 12.5px; }
+        .wp-refs ol { padding-left: 22px; }
+        .wp-refs li { margin-bottom: 3px; }
+
+        /* ── Pie ── */
+        .wp-footer {
+            border-top: 1px solid #a2a9b1;
+            margin-top: 28px;
+            padding-top: 10px;
+            font-size: 12px;
+            color: #54595d;
+            text-align: center;
+            clear: both;
+        }
+        .wp-footer a { color: #3366cc; }
+
+        a { color: #3366cc; }
+    </style>
+</head>
+<body>
+
+    <!-- CABECERA -->
+    <header class="wp-header">
+        <a class="wp-header-logo" href="#">
+            W
+            <span>Wikipedia, la enciclopedia libre</span>
+        </a>
+        <form class="wp-search" onsubmit="return false;">
+            <input type="search" placeholder="Buscar en Wikipedia">
+            <button type="submit">Buscar</button>
+        </form>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="wp-layout">
+
+        <!-- Sidebar -->
+        <nav class="wp-sidebar">
+            <a href="#">Portada</a>
+            <a href="#">Portal de la comunidad</a>
+            <a href="#">Actualidad</a>
+            <a href="#">Cambios recientes</a>
+            <div class="wp-sidebar-section">
+                <h4>Herramientas</h4>
+                <a href="#">Lo que enlaza aquí</a>
+                <a href="#">Cambios relacionados</a>
+                <a href="#">Páginas especiales</a>
+                <a href="#">Enlace permanente</a>
+                <a href="#">Elemento de Wikidata</a>
+            </div>
+            <div class="wp-sidebar-section">
+                <h4>Imprimir/exportar</h4>
+                <a href="#">Crear un libro</a>
+                <a href="#">Descargar como PDF</a>
+                <a href="#">Versión para imprimir</a>
+            </div>
+            <div class="wp-sidebar-section">
+                <h4>En otros proyectos</h4>
+                <a href="#">Wikiquote</a>
+                <a href="#">Wikisource</a>
+            </div>
+        </nav>
+
+        <!-- Contenido -->
+        <main class="wp-content">
+
+            <!-- Pestañas -->
+            <div class="wp-tabs">
+                <span class="wp-tab active">Artículo</span>
+                <span class="wp-tab">Discusión</span>
+                <span class="wp-tab-spacer"></span>
+                <span class="wp-tab">Leer</span>
+                <span class="wp-tab">Editar</span>
+                <span class="wp-tab">Ver historial</span>
+            </div>
+
+            <!-- Banner de aviso -->
+            <div class="wp-banner">
+                <span class="wp-banner-icon">ℹ</span>
+                <span>
+                    Este artículo <b>no cita</b> todas las fuentes necesarias.
+                    Por favor, ayude a <a href="#">mejorar este artículo</a> añadiendo citas
+                    de fuentes fiables. El material sin fuentes puede ser cuestionado y eliminado.
+                    <span style="color:#54595d">(Enero 2025)</span>
+                </span>
+            </div>
+
+            <!-- Título -->
+            <h1 class="wp-title">Cecilio</h1>
+
+            <!-- INFOBOX — va antes de los párrafos para que el float:right funcione -->
+            <div class="wp-infobox">
+                <div class="wp-infobox-title">Cecilio</div>
+                <div class="wp-infobox-img">
+                    <div class="portrait">Retrato<br>no disponible</div>
+                    <div class="wp-infobox-caption">Grabado atribuido a taller desconocido, ca. 2019</div>
+                </div>
+                <table>
+                    <tr><td>Nombre completo</td><td>Cecilio de la Sabiduría Perpetua</td></tr>
+                    <tr><td>Nacimiento</td><td>7 de febrero de 1974<br>Barcelona, España</td></tr>
+                    <tr><td>Residencia</td><td>Barcelona, España</td></tr>
+                    <tr><td>Época</td><td>Filosofía contemporánea</td></tr>
+                    <tr><td>Región</td><td>Filosofía occidental</td></tr>
+                    <tr><td>Escuela</td><td>Neosocratismo catalán<br>Pragmatismo existencial</td></tr>
+                    <tr><td>Intereses</td><td>Ética, ontología, café con leche</td></tr>
+                    <tr><td>Ideas notables</td><td>Teoría del Pensamiento Necesario;<br>paradoja de Cecilio</td></tr>
+                    <tr><td>Influencias</td><td>Sócrates, Wittgenstein, Camus</td></tr>
+                    <tr><td>Influenciados</td><td>Generación Z filosófica,<br>varios doctorandos</td></tr>
+                    <tr><td>Alma mater</td><td>Universidad de Barcelona</td></tr>
+                    <tr><td>Institución</td><td>Instituto Superior de Pensamiento Aplicado</td></tr>
+                    <tr><td>Premios</td><td>Premio Mediterráneo de Filosofía (2018)<br>Mención honorífica UNESCO (2022)</td></tr>
+                </table>
+            </div>
+
+            <!-- Párrafos de introducción -->
+            <p>
+                <b>Cecilio</b> (Barcelona, 7 de febrero de 1974) es un filósofo y pensador español contemporáneo,
+                considerado por muchos como «el último gran pensador del Mediterráneo».<sup><a href="#ref1">[1]</a></sup>
+                Es conocido principalmente por su obra <i>El pensamiento que no cesa</i> (2009) y por haber fundado
+                la corriente denominada <b>neosocratismo catalán</b>, que combina la tradición mayéutica clásica
+                con el pragmatismo posmoderno.<sup><a href="#ref2">[2]</a></sup>
+            </p>
+            <p>
+                Sus ideas han generado debate en los ámbitos académicos europeos, aunque también han suscitado
+                controversia entre los sectores más conservadores de la filosofía analítica.<sup><a href="#ref3">[3]</a></sup>
+                Actualmente reside en Barcelona, donde imparte conferencias y escribe con la misma intensidad con
+                que, según sus allegados, consume café.<sup><a href="#ref4">[4]</a></sup>
+            </p>
+
+            <!-- TABLA DE CONTENIDOS -->
+            <div class="wp-toc">
+                <div class="wp-toc-title">Contenido</div>
+                <ol>
+                    <li>
+                        <a href="#biografia">Biografía</a>
+                        <ol>
+                            <li><a href="#infancia">Infancia y formación</a></li>
+                            <li><a href="#carrera">Trayectoria académica</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="#pensamiento">Pensamiento filosófico</a></li>
+                    <li><a href="#obras">Obras principales</a></li>
+                    <li><a href="#legado">Legado e influencia</a></li>
+                    <li><a href="#controversias">Controversias</a></li>
+                    <li><a href="#referencias">Referencias</a></li>
+                </ol>
+            </div>
+
+            <!-- SECCIÓN: Biografía -->
+            <div class="wp-section" id="biografia">
+                <h2>Biografía</h2>
+
+                <h3 id="infancia">Infancia y formación</h3>
+                <p>
+                    Cecilio nació en el barrio del Eixample de Barcelona el 7 de febrero de 1974,
+                    en el seno de una familia de clase media con inquietudes culturales.<sup><a href="#ref5">[5]</a></sup>
+                    Desde pequeño mostró una curiosidad desbordante por las grandes preguntas de la existencia,
+                    lo que provocaba cierta exasperación en sus profesores de primaria, quienes anotaban en sus
+                    informes cosas como «Cecilio pregunta demasiado».<sup><a href="#ref6">[6]</a></sup>
+                </p>
+                <p>
+                    Estudió Filosofía en la Universidad de Barcelona, donde se graduó con matrícula de honor
+                    en 1997 con una tesina titulada <i>¿Por qué algo en lugar de nada? Y si hay algo,
+                    ¿qué hacemos con ello?</i>, calificada por su director de tesis como
+                    «perturbadoramente brillante».<sup><a href="#ref7">[7]</a></sup>
+                </p>
+
+                <h3 id="carrera">Trayectoria académica</h3>
+                <p>
+                    Tras completar su doctorado en 2003 en la Universidad Autónoma de Barcelona,
+                    Cecilio realizó estancias de investigación en París, Berlín y una pequeña librería
+                    de Oporto que, según él mismo ha declarado, «fue más formativa que cualquier
+                    universidad».<sup><a href="#ref8">[8]</a></sup>
+                </p>
+                <p>
+                    En 2007 fundó el <b>Instituto Superior de Pensamiento Aplicado</b>, organización
+                    que ha organizado más de ciento veinte seminarios y coloquios filosóficos,
+                    algunos de ellos con título deliberadamente provocador.<sup><a href="#ref9">[9]</a></sup>
+                </p>
+            </div>
+
+            <!-- SECCIÓN: Pensamiento filosófico -->
+            <div class="wp-section" id="pensamiento">
+                <h2>Pensamiento filosófico</h2>
+                <p>
+                    El núcleo del pensamiento de Cecilio gira en torno a la <b>Teoría del Pensamiento Necesario</b>:
+                    la idea de que pensar no es una actividad opcional del ser humano, sino una condición inevitable
+                    de su existencia, y que negarla conduce inevitablemente a lo que él llama «la estupidez
+                    voluntaria».<sup><a href="#ref10">[10]</a></sup>
+                </p>
+                <p>
+                    Su método filosófico, inspirado en la mayéutica socrática, consiste en formular preguntas
+                    aparentemente sencillas que ocultan una profundidad abismal. Esta técnica, que sus discípulos
+                    llaman el «método Cecilio», ha sido comparada con «un interrogatorio amable del que nadie
+                    sale ileso».<sup><a href="#ref11">[11]</a></sup>
+                </p>
+                <p>
+                    Asimismo, Cecilio es autor de la llamada <b>paradoja de Cecilio</b>: «Si sabes que no sabes,
+                    ya sabes algo más que el que cree que sabe».<sup><a href="#ref12">[12]</a></sup> Esta formulación
+                    ha aparecido en más de doscientas tesis doctorales en diecisiete países, aunque el propio filósofo
+                    ha reconocido que «es básicamente Sócrates, pero dicho de otra manera».<sup><a href="#ref13">[13]</a></sup>
+                </p>
+            </div>
+
+            <!-- SECCIÓN: Obras principales -->
+            <div class="wp-section" id="obras">
+                <h2>Obras principales</h2>
+                <ul>
+                    <li><i>¿Por qué algo en lugar de nada? Y si hay algo, ¿qué hacemos con ello?</i> (Tesina, 1997)</li>
+                    <li><i>El pensamiento que no cesa</i> (Editorial Anagrama, 2009)</li>
+                    <li><i>Preguntas para después de cenar</i> (Editorial Planeta, 2012)</li>
+                    <li><i>La razón y sus descontentos</i> (Siruela, 2015)</li>
+                    <li><i>Manual para pensar sin que duela</i> (Alianza Editorial, 2018)</li>
+                    <li><i>Del sofá a Sócrates: filosofía para sedentarios</i> (Ariel, 2021)</li>
+                    <li><i>Conversaciones con nadie en particular</i> (pendiente de publicación, 2025)</li>
+                </ul>
+                <p>
+                    Su obra más influyente, <i>El pensamiento que no cesa</i>, ha sido traducida a dieciséis
+                    idiomas y vendido más de 400.000 ejemplares en todo el mundo.<sup><a href="#ref14">[14]</a></sup>
+                    El <i>Le Monde</i> la describió como «una bocanada de aire fresco en un panorama filosófico
+                    que huele a cerrado».<sup><a href="#ref15">[15]</a></sup>
+                </p>
+            </div>
+
+            <!-- SECCIÓN: Legado -->
+            <div class="wp-section" id="legado">
+                <h2>Legado e influencia</h2>
+                <p>
+                    La influencia de Cecilio se extiende más allá del ámbito académico. Sus libros se encuentran
+                    habitualmente en mesitas de noche, cafeterías con vocación intelectual y maletas de estudiantes
+                    de postgrado de toda Europa.<sup><a href="#ref16">[16]</a></sup> En 2018 fue galardonado con el
+                    <b>Premio Mediterráneo de Filosofía</b>, y en 2022 recibió una mención honorífica de la UNESCO
+                    por su contribución al fomento del pensamiento crítico.<sup><a href="#ref17">[17]</a></sup>
+                </p>
+                <p>
+                    En 2023, una encuesta realizada por la revista <i>Filosofía Hoy</i> lo situó entre los cincuenta
+                    pensadores vivos más influyentes de habla hispana, junto a otras personalidades del mundo
+                    intelectual contemporáneo.<sup><a href="#ref18">[18]</a></sup>
+                </p>
+            </div>
+
+            <!-- SECCIÓN: Controversias -->
+            <div class="wp-section" id="controversias">
+                <h2>Controversias</h2>
+                <p>
+                    No toda la recepción de su obra ha sido positiva. El filósofo analítico Ramón Pellicer Suárez
+                    publicó en 2016 un artículo titulado «Cecilio y el arte de no decir nada con muchas palabras»,
+                    al que Cecilio respondió con una conferencia de tres horas titulada «El arte de criticar sin
+                    haber entendido».<sup><a href="#ref19">[19]</a></sup> El intercambio, que se viralizó en redes
+                    académicas, es hoy considerado un clásico de la polémica filosófica contemporánea en
+                    España.<sup><a href="#ref20">[20]</a></sup>
+                </p>
+            </div>
+
+            <!-- REFERENCIAS -->
+            <div class="wp-section" id="referencias">
+                <h2>Referencias</h2>
+                <div class="wp-refs">
+                    <ol>
+                        <li id="ref1">Martínez, P. (2019). «El último gran pensador del Mediterráneo». <i>El País Cultural</i>. Consultado el 12 de marzo de 2024.</li>
+                        <li id="ref2">VV.AA. (2011). <i>Corrientes filosóficas del siglo XXI en España</i>. Madrid: Cátedra. p. 214.</li>
+                        <li id="ref3">Pellicer Suárez, R. (2016). «Cecilio y el arte de no decir nada con muchas palabras». <i>Revista de Filosofía Analítica</i>, vol. 44, pp. 88-102.</li>
+                        <li id="ref4">Entrevista en <i>La Vanguardia</i>, 3 de octubre de 2021.</li>
+                        <li id="ref5">Gomà, J. (2020). <i>Filósofos de nuestro tiempo</i>. Barcelona: Galaxia Gutenberg. p. 67.</li>
+                        <li id="ref6">Archivo del colegio público Lluís Vives de Barcelona, expediente académico, curso 1981-82.</li>
+                        <li id="ref7">Informe del tribunal evaluador, Universidad de Barcelona, junio de 1997.</li>
+                        <li id="ref8">Declaraciones de Cecilio en el podcast <i>Filosofía en zapatillas</i>, episodio 34 (2022).</li>
+                        <li id="ref9">Web oficial del Instituto Superior de Pensamiento Aplicado. Consultada el 5 de enero de 2025.</li>
+                        <li id="ref10">Cecilio (2009). <i>El pensamiento que no cesa</i>. Barcelona: Anagrama. pp. 34-56.</li>
+                        <li id="ref11">Rodríguez Pons, M. (2014). «El método Cecilio y sus derivaciones didácticas». <i>Cuadernos de Pedagogía Filosófica</i>, 12, pp. 4-19.</li>
+                        <li id="ref12">Cecilio (2018). <i>Manual para pensar sin que duela</i>. Madrid: Alianza Editorial. p. 11.</li>
+                        <li id="ref13">Entrevista en <i>El Cultural</i>, 14 de noviembre de 2018.</li>
+                        <li id="ref14">Informe de ventas, Editorial Anagrama, 2023.</li>
+                        <li id="ref15">Bernard, C. (2010). «Un vent frais sur la philosophie ibérique». <i>Le Monde des Livres</i>, 8 de enero de 2010.</li>
+                        <li id="ref16">Estudio etnográfico realizado por la Universidad Complutense, 2020.</li>
+                        <li id="ref17">Resolución UNESCO/PHI/2022/DR-47. París, 18 de marzo de 2022.</li>
+                        <li id="ref18"><i>Filosofía Hoy</i>, número especial «Los 50 pensadores vivos más influyentes», octubre de 2023, pp. 12-38.</li>
+                        <li id="ref19">Archivo de conferencias del Instituto Superior de Pensamiento Aplicado, 2016.</li>
+                        <li id="ref20">Sánchez Ferlosio, A. (2023). «La gran polémica de 2016 que definió la filosofía española contemporánea». <i>Babelia</i>.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Pie de página -->
+            <div class="wp-footer">
+                Esta página se editó por última vez el 2 de abril de 2025 a las 17:43. &nbsp;·&nbsp;
+                El texto está disponible bajo la
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">Licencia Creative Commons Atribución-CompartirIgual 4.0</a>;
+                pueden aplicarse cláusulas adicionales. &nbsp;·&nbsp;
+                <a href="#">Política de privacidad</a> &nbsp;·&nbsp;
+                <a href="#">Acerca de Wikipedia</a> &nbsp;·&nbsp;
+                <a href="#">Limitación de responsabilidad</a>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
